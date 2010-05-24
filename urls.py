@@ -1,3 +1,4 @@
+# $Id$
 from django.conf.urls.defaults import *
 from helix.hiv.views import *
 from django.contrib.auth.views import login,logout
@@ -37,7 +38,7 @@ if settings.DEBUG:
 	urlpatterns += patterns('',
 	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
 		{'document_root':
-		'/Users/scollins/Programming/CoreITPro/BTech/hivapp/trunk/helix/media/'}),
+		'/Users/scollins/Programming/CoreITPro/BTech/helix/media/'}),
 	(r'^databrowse/(.*)', databrowse.site.root),
 )
 

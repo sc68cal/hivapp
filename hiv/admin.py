@@ -1,3 +1,4 @@
+# $Id$
 from hiv.models import *
 from django.contrib import admin
 

@@ -1,3 +1,4 @@
+# $Id$
 from django.db import models
 
 """
