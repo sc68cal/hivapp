@@ -1,0 +1,162 @@
+/*
+Original Design by Brian Moldover, B-Tech consulting, Ltd.
+Modified by Sean Collins, Core IT Pro, LLC
+http://www.b-techconsulting.com
+http://www.coreitpro.com/
+*/
+
+body {
+	background: #666767 repeat-x;
+	text-align: justify;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #333333;
+}
+
+/* Header */
+
+#header {
+	width: 700px;
+	height: 154px;
+	/*margin: 0px auto;*/
+	background-image: url(../images/b_header.png); 
+	background-repeat: no-repeat;
+}
+
+
+/* Menu */
+
+#menu {
+	width: 700px;
+	height: 37px;
+	/*margin: auto;*/
+	background-image: url(../images/menu.png);
+	background-repeat: no-repeat;
+	padding-bottom: 0px;
+
+}
+
+#menu ul {
+	margin: 0px;
+	padding: 5px 0px 0px 0px;
+	list-style: none;
+	color: #FFFFFF;
+}
+
+#menu li {
+	display: inline;
+	color: #FFFFFF;
+}
+
+#menu a {
+	
+	float: left;
+	width: 112px;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	color:#ffffff;
+	
+}
+
+#menu a:hover {
+	color:#660099;
+	}
+
+
+/* Page */
+#content {
+	background: #cccccc;
+	width: 700px;
+	margin:  -6px 0 0 0 ;
+	padding: 0px 0px 50px 0px;
+	min-height: 400px;
+}
+
+.object {
+	padding-left: 15px;
+	padding-bottom: 15px;
+
+}
+
+#content h1 {
+	text-align: left;
+	text-decoration: underline;
+	font-weight: normal;
+	color: #666767;
+	}
+	
+#content h2 {
+	
+	text-align: center;
+	text-decoration: underline;
+	font-weight: normal;
+	font-size: 1.2em;
+	color: #666767;
+	}
+
+
+/* Content */
+
+#colOne {
+	background: #ffffff;
+	float: left;
+	width: 130px;
+	padding-left: 10px;
+	
+
+}
+#form {
+
+	padding-left: 0px;
+	}
+
+
+#colTwo {
+	float: right;
+	width:500px;
+	padding-right: 20px;
+	
+}
+
+#data{
+font-size:1.6em;padding:20px 0 0 50px;
+}
+
+#colLogin {
+	background: #ffffff;
+	float: left;
+	width: 150px;
+	padding-left: 10px;
+	
+}
+/* Footer */
+
+#footer {
+	clear: both;
+	width: 700px;
+	height: 37px;
+	/*margin: 0px auto;*/
+	margin-bottom: 50px;
+	background: url(../images/footer.png);
+	background-repeat: no-repeat;
+/*
+ * color: #666767;
+ */
+}
+
+#footer p {
+	margin: 0;
+	text-align: center;
+	padding: 4px;
+	line-height: normal;
+	font-size: .9em;
+	color: #FFF;
+}
+
+#footer a:visited {
+	color: #666767;
+}
+#footer a:link{
+	color: #FFF;
+}

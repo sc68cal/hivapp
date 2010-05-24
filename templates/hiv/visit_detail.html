@@ -1,0 +1,66 @@
+{% extends "hiv/base.html" %}
+
+{% block content %}
+<div id="data">
+	<h1>Visit</h1>
+	<h3><a href="{% url helix.hiv.views.visit_update object.id %}">Edit</a></h3>
+	Visit ID: {{ object.name }}<br />
+	Date of Visit: {{object.date|default_if_none:"Not Available"}} <br />
+	CD4: {{ object.cd4|default_if_none:"Not Available" }}<br />
+	Viral: {{ object.viral|default_if_none:"Not Available"  }} <br />
+	DSG: {{ object.dsg|default_if_none:"Not Available"  }} <br/>
+
+
+	{% for drug in object.drugsused_set.all %}
+		{% if forloop.first %}
+			<h2>Drugs Used:</h2>
+		{% endif %}
+		{% if forloop.last %}
+			{{ drug.drug }}
+		{% else %}
+			{{ drug.drug }},
+		{% endif %}
+	{% endfor %}
+
+
+	{% for ill in object.patientadditionalillnesses_set.select_related %}
+		{% if forloop.first %}
+			<h2>Illnesses:</h2>
+		{% endif %}
+		{% if forloop.last %}
+			{{ ill.illness.name }}<br />
+		{% else %}
+			{{ ill.illness.name }},
+		{% endif %}
+
+	{% endfor %}
+
+	{% for exp in object.patientexposedto_set.select_related %}
+		{% if forloop.first %} 
+			<h2>Exposures:</h2>
+		{% endif %}
+		
+		{% if forloop.last %}
+			{{ exp.exposure.name }}<br />
+		{% else %}
+			{{ exp.exposure.name }},
+		{% endif %}
+
+	{% endfor %}
+
+	{% for mut in object.mutation_set.select_related %}
+		{% if forloop.first %}
+		<h2> Mutations: </h2>
+		{% endif %}
+			<a href="{% url helix.hiv.views.mutation_detail mut.id %}">
+				{{ mut }}
+			</a><br />
+	{% endfor %}
+
+
+
+		
+</div>
+
+
+{% endblock %}

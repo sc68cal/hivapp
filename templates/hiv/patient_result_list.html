@@ -1,0 +1,15 @@
+{% extends "hiv/base.html" %}
+
+{% block content %}
+<div id="list" style="margin: auto; width:500px; padding-top:50px;">
+<h2>Results:</h2>
+<h2><a href="/search/">Back</a></h2>
+
+	{% for patient in object_list %}
+		<div class="object">
+			<a href="/patient/{{patient.id}}">{{ patient.name }}</a>
+		</div>
+	{% endfor %}
+	</div>
+</div>
+{% endblock %}

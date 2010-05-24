@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>B-Tech Consulting, Ltd. - Bioinformatics consulting and contract research</title>
+<meta name="keywords" content="bioinformatics consulting, bioinformatics, microarray, microarrays, microarray analysis, microarray consulting, computational biology, DNA sequencing, DNA, Biotech, Biotechnology, Phamaceutical consulting , genomics consulting, genomic analysis, cheminformatics, chemoinformatics, chemical biology, virtual screening" />
+<meta name="verify-v1" content="EK4s598GInE6h/dwubDrFw2d1nefI9n+MytUyXvJ3rM=" />
+<meta name="Description" content="B-Tech Consulting, Ltd. - Bioinformatics consulting and contract research" />
+<link rel="stylesheet" href="/site_media/css/default.css" media="screen and (min-device-width: 481px)" type="text/css" />
+<link type="text/css" rel="stylesheet" media="only screen and (max-device-width: 480px)" href="/site_media/css/handheld.css" />
+<link rel="stylesheet" href="/site_media/css/handheld.css" media="handheld" type="text/css" />
+<style type="text/css">
+<!--
+.style1 {font-size: medium}
+.style3 {font-size: large}
+.style5 {font-size: 14px}
+-->
+</style>
+</head>
+<body>
+<!-- start header -->
+<div id="header">
+</div>
+
+<!-- end header -->
+<div id="menu">
+  <ul>
+	<li><a href="{% url helix.hiv.views.patient_search %}">Patient Search</a></li>
+	<li><a href="{% url helix.hiv.views.patient_list %}">Patients</a></li>
+	<li><a href="{% url helix.hiv.views.visit_list %}">Patient Visit</a></li>
+	<li><a href="{% url django.contrib.auth.views.login %}">User Log In</a></li>
+	<li><a href="{% url django.contrib.auth.views.logout %}">User Log Out</a></li>
+  </ul>
+	
+</div>
+<!-- end menu -->
+
+<!-- start page -->
+<div id="content">
+	<!-- start content -->
+	{% block content %}
+
+	{% endblock %}
+
+</div>
+<div id="footer">
+<p>Developed by <a href="http://www.coreitpro.com">Core IT Pro LLC</a></p>
+</div>
+</body>
+</html>

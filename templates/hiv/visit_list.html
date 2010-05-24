@@ -1,0 +1,16 @@
+{% extends "hiv/base.html" %}
+
+{% block content %}
+<div id="list" style="margin: auto; width:500px; padding-top:50px;">
+	{% for patient in object_list %}
+		{% if forloop.counter0|divisibleby:"8" %}
+			<div class="object">
+		{% endif %}
+				<a href="{{patient.id}}">{{ patient.name }}</a>
+		{% if forloop.counter|divisibleby:"8" %}
+			</div>
+		{% endif %}
+	{% endfor %}
+	</div>
+</div>
+{% endblock %}

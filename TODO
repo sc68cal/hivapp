@@ -1,0 +1,22 @@
+May 24 2010 scollins:
+
+* ACL's for different classes of users (Read only, edit, administrative)
+* Revision history - who changed it and what changed?
+	* http://code.djangoproject.com/wiki/AuditTrail ?
+	* http://code.djangoproject.com/wiki/FullHistory ?
+* Remove lowest & higest from patient, those should be calculated fields
+* Change "Name" to "Patient ID"
+* Alert the user when lowest & highest cd4 and viral change, as they add
+new visit data
+* Make CD4 and DSG fields calculated values based on visit data
+* Calculate patient's days since previous visit
+* Figure out where to present that data
+* Calculate patient's months since previous visit
+* Figure out where to present that data
+* Months between lowest CD4 and PBMC collection.
+* Months between current CD4 and PBMC
+* Months between highest viral load and PBMC collection
+* Months between current viral load and PBMC collection
+* also need these records updated with a place that shows
+  whether a PCR product sequence has been obtained and SNPs called.
+* Import PCR data from excel.

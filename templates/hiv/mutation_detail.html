@@ -1,0 +1,49 @@
+{% extends "hiv/base.html" %}
+{% load order_by %}
+
+
+{% block content %}
+<div id="data">
+	<h2> Mutation </h2>
+<style>
+table,th,td{
+	border: 1px solid black;
+}
+table{
+	margin-top: 50px;
+}
+
+</style>
+
+	<div>
+	Patient: <a href="{% url helix.hiv.views.patient_detail object.visit.patient.id %}">{{ object.visit.patient.name }}</a><br />
+	</div>
+
+	<table>
+		<tr>
+			<th>Sample Read Start</th>
+			<th>Sample Read End</th>
+			<th>Read Length</th>
+		</tr>
+			<td>{{ object.read_start }}</td>
+			<td>{{ object.read_end }}</td>
+			<td>{{ object.get_length }} </td>
+	</table>
+
+		<table>
+			<tr>
+				<th>Position</th>
+				<th>Reference NT -> Mutation NT</th>
+			</tr>
+	{% for mutation in object.mutationposition_set.select_related|order_by:'position' %}
+
+		<tr>
+			<td>{{ mutation.position }} </td>
+			<td>{{ mutation.ref_nt }} -> {{ mutation.mut_nt }} </td>
+		</tr>
+			
+
+	{% endfor %}
+		</table>
+</div>
+{% endblock %}
