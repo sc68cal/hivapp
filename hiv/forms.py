@@ -8,14 +8,11 @@ from helix.hiv.models import *
 class VisitForm(ModelForm):
 	class Meta:
 		model = Visit
-		fields = ('patient','date','viral','name','dsg','drugs',
-			'exposures','illnesses',
-			)
+		exclude = ('id')
 		
 class PatientSearchForm(ModelForm):
 	class Meta:
 		model = Patient
-		fields = ('name',)
 
 
 # TODO: Create race table and do a ManyToMany foreign key
@@ -45,6 +42,4 @@ class PatientForm(ModelForm):
 	race = forms.CharField(widget=forms.Select(choices=race_choices))
 	class Meta:
 		model = Patient
-		fields = ('name','gender','year_of_birth','sero_positive_since',
-			'lowest_cd4','highest_viral','highest_viral_date',
-			'race',)
+		exclude = ('id')

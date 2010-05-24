@@ -5,10 +5,11 @@ TEMPLATE_DEBUG = DEBUG
 
 CACHE_BACKEND = 'db://django_cache'
 
-LOGIN_URL = '/hivapp/accounts/login'
-LOGOUT_URL = '/hivapp/accounts/logout'
-LOGIN_REDIRECT_URL = '/hivapp/accounts/profile'
-SESSION_COOKIE_SECURE = True
+if not DEBUG:
+	LOGIN_URL = '/hivapp/accounts/login'
+	LOGOUT_URL = '/hivapp/accounts/logout'
+	LOGIN_REDIRECT_URL = '/hivapp/accounts/profile'
+	SESSION_COOKIE_SECURE = True
 
 # Use to prevent caching of pages that require authentication
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
@@ -85,7 +86,7 @@ SECRET_KEY = 'h6zsd-$u&pe=kop$1q6u^ykg#-=b)&gaxjy-wh0cn@^o^^w7$)'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
 )
 
 '''
@@ -107,6 +108,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
+        'django.middleware.transaction.TransactionMiddleware',
+    'reversion.middleware.RevisionMiddleware',
     
 )
 
@@ -131,4 +134,5 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'helix.hiv',
+    'reversion',
 )

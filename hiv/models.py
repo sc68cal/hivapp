@@ -1,5 +1,6 @@
 # $Id$
 from django.db import models
+import reversion
 
 """
 Drug class encapsulates all the drugs that the study has encountered.
@@ -304,6 +305,3 @@ class Sequence(models.Model):
 				db_column='OCT_I',
 				blank=True) # Field name made lowercase.
 	visit = models.ForeignKey(Visit)
-
-
-
