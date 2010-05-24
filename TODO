@@ -20,3 +20,5 @@ new visit data
 * also need these records updated with a place that shows
   whether a PCR product sequence has been obtained and SNPs called.
 * Import PCR data from excel.
+* Special case: If it is the first visit for a patient, create a "Past ART" and
+  "Past CD4 and DSG" to reflect data that is coming from historic sources.
