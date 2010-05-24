@@ -5,6 +5,11 @@ TEMPLATE_DEBUG = DEBUG
 
 CACHE_BACKEND = 'db://django_cache'
 
+LOGIN_URL = '/hivapp/accounts/login'
+LOGOUT_URL = '/hivapp/accounts/logout'
+LOGIN_REDIRECT_URL = '/hivapp/accounts/profile'
+SESSION_COOKIE_SECURE = True
+
 # Use to prevent caching of pages that require authentication
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
@@ -14,14 +19,20 @@ ADMINS = (
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-MANAGERS = ADMINS
-DATABASE_ENGINE = 'mysql'
-DATABASE_NAME = 'hivapp'
-DATABASE_USER = 'root'
-DATABASE_PASSWORD = 'root'
-DATABASE_HOST = ''
-DATABASE_PORT = '8889'
+if DEBUG:
+	MANAGERS = ADMINS
+	DATABASE_ENGINE = 'mysql'
+	DATABASE_NAME = 'hivapp'
+	DATABASE_USER = 'root'
+	DATABASE_PASSWORD = 'root'
+	DATABASE_HOST = ''
+	DATABASE_PORT = '8889'
+else:
+	DATABASE_ENGINE= "mysql"
+	DATABASE_NAME = 'hivapp'
+	DATABASE_USER = 'hivapp'
+	DATABASE_HOST = 'localhost'
+	DATABASE_PASSWORD = 'ZTrMs1iCb'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -42,18 +53,30 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = "/Users/scollins/Programming/CoreITPro/BTech/helix/media"
+if DEBUG:
+	MEDIA_ROOT = "/Users/scollins/Programming/CoreITPro/BTech/hivapp/trunk/helix/"
+else:
+	MEDIA_ROOT = "/var/www/html/hivapp/helix/media"
+
 
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/site_media/'
+if DEBUG:
+	MEDIA_URL = '/site_media/'
+else:
+	MEDIA_URL = '/static/'
+
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+if DEBUG:
+	ADMIN_MEDIA_PREFIX = '/media/'
+else:
+	ADMIN_MEDIA_PREFIX = '/media/admin/'
+
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'h6zsd-$u&pe=kop$1q6u^ykg#-=b)&gaxjy-wh0cn@^o^^w7$)'
@@ -89,12 +112,17 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'helix.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    '/Users/scollins/Programming/CoreITPro/BTech/helix/templates',
-)
+if DEBUG:
+	TEMPLATE_DIRS = (
+    		# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    		# Always use forward slashes, even on Windows.
+    		# Don't forget to use absolute paths, not relative paths.
+    		'/Users/scollins/Programming/CoreITPro/BTech/hivapp/trunk/helix/templates/',
+	)
+else:
+	TEMPLATE_DIRS = ('/var/www/html/hivapp/helix/templates/')
+
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',

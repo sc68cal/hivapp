@@ -37,7 +37,7 @@ if settings.DEBUG:
 	urlpatterns += patterns('',
 	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
 		{'document_root':
-		'/Users/scollins/Programming/CoreITPro/BTech/helix/media/'}),
+		'/Users/scollins/Programming/CoreITPro/BTech/hivapp/trunk/helix/media/'}),
 	(r'^databrowse/(.*)', databrowse.site.root),
 )
 
