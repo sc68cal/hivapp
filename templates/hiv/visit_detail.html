@@ -11,7 +11,7 @@
 	DSG: {{ object.dsg|default_if_none:"Not Available"  }} <br/>
 
 
-	{% for drug in object.drugsused_set.all %}
+	{% for drug in object.drugused_set.all %}
 		{% if forloop.first %}
 			<h2>Drugs Used:</h2>
 		{% endif %}

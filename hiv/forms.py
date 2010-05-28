@@ -3,19 +3,15 @@ from django.forms import ModelForm
 from django import forms
 from helix.hiv.models import *
 
+class PatientReportForm(ModelForm):
+	pass
 
 
-class VisitForm(ModelForm):
-	class Meta:
-		model = Visit
-		exclude = ('id')
-		
 class PatientSearchForm(ModelForm):
 	class Meta:
 		model = Patient
 
-
-# TODO: Create race table and do a ManyToMany foreign key
+# TODO: Create race table and do a ManyToMany foreign key?
 class PatientForm(ModelForm):
 	gender_choices = (
 				("M","M"),
@@ -35,6 +31,8 @@ class PatientForm(ModelForm):
 				("Native Hawaiian or other Pacific Islander",
 					"Native Hawaiian or other Pacific Islander"),
 				("More than one race","More than one race"),
+				("Unknown","Unknown"),
+				("AA/Nat Am","AA/Nat Am"),
 			)
 	year_of_birth = forms.IntegerField()
 	sero_positive_since = forms.IntegerField()
@@ -42,4 +40,7 @@ class PatientForm(ModelForm):
 	race = forms.CharField(widget=forms.Select(choices=race_choices))
 	class Meta:
 		model = Patient
-		exclude = ('id')
+
+class VisitForm(ModelForm):
+	class Meta:
+		model = Visit

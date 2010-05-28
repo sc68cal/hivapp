@@ -6,7 +6,7 @@
 		{% if forloop.counter0|divisibleby:"12" %}
 			<div class="object">
 		{% endif %}
-				<a href="{{patient.id}}">{{ patient.name }}</a>
+				<a href="{{patient.id}}">{{ patient.patient_id }}</a>
 		{% if forloop.counter|divisibleby:"12" %}
 			</div>
 		{% endif %}

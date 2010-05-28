@@ -1,10 +1,7 @@
 {% extends "hiv/base.html" %}
 {% load order_by %}
 
-
-{% block content %}
-<div id="data">
-	<h2> Mutation </h2>
+{% block head %}
 <style>
 table,th,td{
 	border: 1px solid black;
@@ -14,9 +11,15 @@ table{
 }
 
 </style>
+{% endblock %}
+
+{% block content %}
+<div id="data">
+	<h2> Mutation </h2>
+
 
 	<div>
-	Patient: <a href="{% url helix.hiv.views.patient_detail object.visit.patient.id %}">{{ object.visit.patient.name }}</a><br />
+	Patient: <a href="{% url helix.hiv.views.patient_detail object.visit.patient.id %}">{{ object.visit.patient.patient_id }}</a><br />
 	</div>
 
 	<table>
@@ -25,9 +28,11 @@ table{
 			<th>Sample Read End</th>
 			<th>Read Length</th>
 		</tr>
+		<tr>
 			<td>{{ object.read_start }}</td>
 			<td>{{ object.read_end }}</td>
 			<td>{{ object.get_length }} </td>
+		</tr>
 	</table>
 
 		<table>

@@ -23,13 +23,13 @@ urlpatterns = patterns('',
 	(r'^mutation/(?P<object_id>\d+)/$',mutation_detail),
 	(r'^patient/$',patient_list),
 	(r'^patient/(?P<object_id>\d+)/$',patient_detail),
-	(r'^patient/add$',patient_create),
+	(r'^patient/add/$',patient_create),
 	(r'^patient/edit/(?P<object_id>\d+)/$',patient_update),
 	(r'^search/$',patient_search),
 	(r'^visit/$',visit_list),
 	(r'^visit/(?P<object_id>\d+)/$',visit_detail),
 
-	(r'^visit/add$',visit_create),
+	(r'^visit/add/$',visit_create),
 	(r'^visit/edit/(?P<object_id>\d+)/$',visit_update),
 	(r'^$', index)
 )

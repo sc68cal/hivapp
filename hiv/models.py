@@ -13,7 +13,7 @@ class Drug(models.Model):
 		db_table = u'drug'
 	def __unicode__(self):
 		return self.name
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=135, blank=True)
 
 
@@ -24,7 +24,7 @@ Exposure Class: List of things that a Patient could be exposed to.
 class Exposure(models.Model):
 	class Meta:
 		db_table = u'exposure'
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=135, blank=True)
 
 	def __unicode__(self):
@@ -38,7 +38,7 @@ class Illness(models.Model):
 	class Meta:
 		db_table = u'illness'
 		verbose_name_plural="Illnesses"
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=135, blank=True)
 	def __unicode__(self):
 		return self.name
@@ -54,9 +54,9 @@ clinical data. A patient can have 0 or many Visits.
 class Patient(models.Model):
 	class Meta:
 		db_table = u'patient'
-		ordering = ['name']
-	id = models.IntegerField(primary_key=True)
-	name = models.CharField(max_length=135, blank=True)
+		ordering = ['patient_id']
+	#id = models.IntegerField(primary_key=True)
+	patient_id = models.CharField(max_length=135, blank=True)
 	gender = models.CharField(max_length=135, blank=True)
 	year_of_birth = models.IntegerField()
 	sero_positive_since = models.IntegerField()
@@ -67,7 +67,7 @@ class Patient(models.Model):
 	race = models.CharField(max_length=135, blank=True)
 
 	def __unicode__(self):
-		return self.name
+		return self.patient_id
 
 	@models.permalink
 	def get_absolute_url(self):
@@ -84,7 +84,7 @@ class Visit(models.Model):
 		db_table = u'visit'
 		ordering = ['name']
 		verbose_name = "Patient Visit"
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	patient = models.ForeignKey(Patient)
 	date = models.DateField(null=True, blank=True)
 	cd4 = models.CharField(max_length=135, blank=True)
@@ -117,7 +117,7 @@ were checked off.
 class DrugTest(models.Model):
 	class Meta:
 		db_table = u'drug_test'
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	drug = models.ForeignKey(Drug)
 	visit = models.ForeignKey(Visit)
 	result = models.IntegerField(null=True, blank=True)
@@ -134,7 +134,7 @@ class DrugUsed(models.Model):
 		db_table = u'drug_used'
 		verbose_name = "Patient Drug History"
 		verbose_name_plural = "Patient Drug Histories"
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	visit = models.ForeignKey(Visit)
 	drug = models.ForeignKey(Drug)
 	frequency = models.IntegerField(null=True, blank=True)
@@ -156,7 +156,7 @@ class HivdTest(models.Model):
 	class Meta:
 		db_table = u'hivd_test'
 		verbose_name = "HIV Test"
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	score = models.CharField(max_length=135, blank=True)
 	type = models.CharField(max_length=135, blank=True)
 	visit = models.ForeignKey(Visit)
@@ -170,7 +170,7 @@ has a Visit.
 class Mutation(models.Model):
 	class Meta:
 		db_table = u'mutation'
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	visit = models.ForeignKey(Visit)
 	read_start = models.IntegerField(null=True, blank=True)
 	read_end = models.IntegerField(null=True, blank=True)
@@ -193,7 +193,7 @@ a binary blob.
 class MutationFile(models.Model):
 	class Meta:
 		db_table = u'mutation_file'
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	mutation = models.ForeignKey(Mutation)
 	file = models.TextField(blank=True)
 
@@ -205,7 +205,7 @@ a position, this is where the actual mutation data is stored. Encapsulates the
 class MutationPosition(models.Model):
 	class Meta:
 		db_table = u'mutation_position'
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	mutation = models.ForeignKey(Mutation)
 	position = models.IntegerField(null=True, blank=True)
 	ref_nt = models.CharField(max_length=3, blank=True)
@@ -227,7 +227,7 @@ class PatientAdditionalIllnesses(models.Model):
 		db_table = u'patient_additional_illnesses'
 		verbose_name = "Patient Illness"
 		verbose_name_plural= "Patient Illnesses"
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	illness = models.ForeignKey(Illness)
 	visit = models.ForeignKey(Visit)
 
@@ -243,7 +243,7 @@ class PatientExposedTo(models.Model):
 	class Meta:
 		db_table = u'patient_exposed_to'
 		verbose_name="Patient Exposure"
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	visit = models.ForeignKey(Visit)
 	exposure = models.ForeignKey(Exposure)
 
@@ -258,7 +258,7 @@ class Sequence(models.Model):
 	class Meta:
 		db_table = u'sequence'
 
-	id = models.IntegerField(primary_key=True)
+	#id = models.IntegerField(primary_key=True)
 	c_ebp_ii = models.CharField(max_length=135,
 			db_column='C_EBP_II',
 			blank=True) # Field name made lowercase.

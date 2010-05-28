@@ -4,7 +4,7 @@
 <div id="data">
 	<h1>Patient</h1>
 	<h3><a href="{% url helix.hiv.views.patient_update object.id %}">Edit</a></h3>
-	Name: {{ object.name }}<br />
+	Patient ID: {{ object.patient_id }}<br />
 	Race: {{object.race|default_if_none:"Not Available"}} <br />
 	Gender: {{ object.gender|default_if_none:"Not Available" }}<br />
 	Year of Birth: {{ object.year_of_birth|default_if_none:"Not Available"  }} <br />
