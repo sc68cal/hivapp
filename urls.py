@@ -1,6 +1,7 @@
 # $Id$
 from django.conf.urls.defaults import *
 from helix.hiv.views import *
+from helix.hiv.forms import *
 from django.contrib.auth.views import login,logout
 from django.contrib import databrowse
 from helix import settings
@@ -20,6 +21,14 @@ urlpatterns = patterns('',
 	(r'^accounts/login/$', login),
 	(r'^accounts/logout/$',logout),
 	(r'^admin/', include(admin.site.urls)),
+	(r'^crf/', CaseReportFormWizard([
+					PatientSelectOrAddForm,
+					AlcoholForm,
+					TobaccoForm,
+					ExposureForm,
+					HivForm,
+					]),
+				),
 	(r'^mutation/(?P<object_id>\d+)/$',mutation_detail),
 	(r'^patient/$',patient_list),
 	(r'^patient/(?P<object_id>\d+)/$',patient_detail),

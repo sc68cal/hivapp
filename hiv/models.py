@@ -2,13 +2,13 @@
 from django.db import models
 import reversion
 
-"""
-Drug class encapsulates all the drugs that the study has encountered.
-Patients normally undergo a drug test, or a voluntary disclosure where they
-state what drugs they have used.
 
-"""
 class Drug(models.Model):
+	"""
+	Drug class encapsulates all the drugs that the study has encountered.
+	Patients normally undergo a drug test, or a voluntary disclosure where
+	they state what drugs they have used.
+	"""
 	class Meta:
 		db_table = u'drug'
 	def __unicode__(self):
@@ -17,11 +17,9 @@ class Drug(models.Model):
 	name = models.CharField(max_length=135, blank=True)
 
 
-'''
-Exposure Class: List of things that a Patient could be exposed to.
-
-'''
 class Exposure(models.Model):
+	"""List of things that a Patient could be exposed to."""
+
 	class Meta:
 		db_table = u'exposure'
 	#id = models.IntegerField(primary_key=True)
@@ -30,11 +28,11 @@ class Exposure(models.Model):
 	def __unicode__(self):
 		return self.name
 
-'''
-Class Illness: Types of illnesses that a Patient can also be suffering from
-in addition to HIV.
-'''
 class Illness(models.Model):
+	"""
+	Illness class encapsulates all the illnesses that the study tracks
+	"""
+
 	class Meta:
 		db_table = u'illness'
 		verbose_name_plural="Illnesses"
@@ -44,14 +42,13 @@ class Illness(models.Model):
 		return self.name
 
 
-'''
-Class that encapsulates patients in the database
-
-This class represents a patient record, with fields representing
-clinical data. A patient can have 0 or many Visits.
-
-'''
 class Patient(models.Model):
+	"""
+	Class that encapsulates patients in the database
+
+	This class represents a patient record, with fields representing
+	clinical data. A patient can have 0 or many Visits
+	"""
 	class Meta:
 		db_table = u'patient'
 		ordering = ['patient_id']
@@ -62,8 +59,8 @@ class Patient(models.Model):
 	sero_positive_since = models.IntegerField()
 	lowest_cd4 = models.IntegerField(null=True, blank=True)
 	highest_viral = models.IntegerField(null=True, blank=True)
-	lowest_cd4_date = models.DateField(null=True, blank=True)
-	highest_viral_date = models.DateField(null=True, blank=True)
+	lowest_cd4_date = models.IntegerField(null=True, blank=True)
+	highest_viral_date = models.IntegerField(null=True, blank=True)
 	race = models.CharField(max_length=135, blank=True)
 
 	def __unicode__(self):
@@ -73,13 +70,12 @@ class Patient(models.Model):
 	def get_absolute_url(self):
     		return ('helix.hiv.views.patient_detail', [str(self.id)])
 
-"""
+class Visit(models.Model):
+	"""
 Visit represents all the actual clinical data, which is recorded each
 time that a Patient comes in.
 
-
-"""
-class Visit(models.Model):
+	"""
 	class Meta:
 		db_table = u'visit'
 		ordering = ['name']
@@ -105,16 +101,17 @@ class Visit(models.Model):
     		return ('helix.hiv.views.visit_detail', [str(self.id)])
 
 
-'''
-DrugTest: Currently not implemented. The original clinical data did not
-have very good record keeping about what drugs were tested / when tested / etc.
 
-A design decision was made to just use the rows in the original data where drugs
-that a patent had either admitted to, or tested positive for
-were checked off.
-
-'''
 class DrugTest(models.Model):
+	'''
+	DrugTest: Currently not implemented. The original clinical data did not
+	have very good record keeping about what drugs were tested / when tested / etc.
+
+	A design decision was made to just use the rows in the original data where drugs
+	that a patent had either admitted to, or tested positive for
+	were checked off.
+
+	'''
 	class Meta:
 		db_table = u'drug_test'
 	#id = models.IntegerField(primary_key=True)
@@ -123,13 +120,14 @@ class DrugTest(models.Model):
 	result = models.IntegerField(null=True, blank=True)
 
 
-'''
-DrugUsed: Encapsulates the ManyToMany relationship between a Patient,
-and the drug(s) that they have either tested positive for, or admitted during
-a Visit.
 
-'''
 class DrugUsed(models.Model):
+	'''
+	DrugUsed: Encapsulates the ManyToMany relationship between a Patient,
+	and the drug(s) that they have either tested positive for, or admitted during
+	a Visit.
+
+	'''
 	class Meta:
 		db_table = u'drug_used'
 		verbose_name = "Patient Drug History"
@@ -147,12 +145,11 @@ class DrugUsed(models.Model):
 		return self.visit.name + "-" + self.drug.name
 
 
-
-'''
-Class HivdTest: Not implemented. Some data from the original spreasheet
-mentioned HIV tests that a patient might have had done during a Visit
-'''
 class HivdTest(models.Model):
+	'''
+	Class HivdTest: Not implemented. Some data from the original spreasheet
+	mentioned HIV tests that a patient might have had done during a Visit
+	'''
 	class Meta:
 		db_table = u'hivd_test'
 		verbose_name = "HIV Test"
@@ -162,12 +159,13 @@ class HivdTest(models.Model):
 	visit = models.ForeignKey(Visit)
 
 
-'''
-Class Mutation: Encapsulates the SNP data that is taken each time a Patient
-has a Visit. 
 
-'''
 class Mutation(models.Model):
+	'''
+	Class Mutation: Encapsulates the SNP data that is taken each time a Patient
+	has a Visit.
+
+	'''
 	class Meta:
 		db_table = u'mutation'
 	#id = models.IntegerField(primary_key=True)
@@ -186,23 +184,25 @@ class Mutation(models.Model):
 	def get_absolute_url(self):
     		return ('helix.hiv.views.mutation_detail', [str(self.id)])
 
-'''
-Class MutationFile: Not Implemented. Should store the original SNP files as
-a binary blob.
-'''
+
 class MutationFile(models.Model):
+	'''
+	Class MutationFile: Not Implemented. Should store the original SNP files as
+	a binary blob.
+	'''
 	class Meta:
 		db_table = u'mutation_file'
 	#id = models.IntegerField(primary_key=True)
 	mutation = models.ForeignKey(Mutation)
 	file = models.TextField(blank=True)
 
-'''
-Class MutationPostion: Within a SNP data sample, if there is a mutation at
-a position, this is where the actual mutation data is stored. Encapsulates the
-1->M relationship between a SNP data sample and the mutations that it has.
-'''
+
 class MutationPosition(models.Model):
+	'''
+	Class MutationPostion: Within a SNP data sample, if there is a mutation at
+	a position, this is where the actual mutation data is stored. Encapsulates the
+	1->M relationship between a SNP data sample and the mutations that it has.
+	'''
 	class Meta:
 		db_table = u'mutation_position'
 	#id = models.IntegerField(primary_key=True)
@@ -218,11 +218,12 @@ class MutationPosition(models.Model):
 
 
 
-'''
-Class PatientAdditionalIllnesses: Encapsulates the 1->M relationship between the
-illnesses that a Patient can be suffering from when they have a Visit.
-'''
+
 class PatientAdditionalIllnesses(models.Model):
+	'''
+	Class PatientAdditionalIllnesses: Encapsulates the 1->M relationship between the
+	illnesses that a Patient can be suffering from when they have a Visit.
+	'''
 	class Meta:
 		db_table = u'patient_additional_illnesses'
 		verbose_name = "Patient Illness"
@@ -235,11 +236,11 @@ class PatientAdditionalIllnesses(models.Model):
 		return self.visit.name + "-" + self.illness.name
 
 
-'''
-Class PatientExposedTo:	Encapsulates the 1->M relationship between the exposures
-that a Patient can disclose in the course of a Visit.
-'''
 class PatientExposedTo(models.Model):
+	'''
+	Class PatientExposedTo:	Encapsulates the 1->M relationship between the exposures
+	that a Patient can disclose in the course of a Visit.
+	'''
 	class Meta:
 		db_table = u'patient_exposed_to'
 		verbose_name="Patient Exposure"
@@ -251,10 +252,11 @@ class PatientExposedTo(models.Model):
 		return self.visit.name + "-" + self.exposure.name
 
 
-'''
-Class Sequence: Not Implemented. 
-'''
+
 class Sequence(models.Model):
+	'''
+	Class Sequence: Not Implemented.
+	'''
 	class Meta:
 		db_table = u'sequence'
 

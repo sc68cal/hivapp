@@ -1,17 +1,36 @@
 $Id$
 
 OPEN ISSUES:
+*	Replicate Case Report Form
+
+*	Patient demographics:
+		Gender
+		Race
+		Age
+		Years seropositive
+		Route of infection
+		HAART status - continuous (cH), discontinuous (dH), or naïve (nH)
+		Drug test results - positive, negative, undetermined (UD)
+		Number of drugs used - taken from column drugs use-admit or test
+			positive.  To make this automated we will need to add
+			the checked boxes from the admitted drugs with the test
+			positive for with filtering out overlap.
+			Not sure how you want that done on your end.
+		Drugs used - break down of percent of patients that admit or
+			test positive for a given drug.
+		Alcohol abuse - past, current, never
+		Tobacco use - past, current, never
+		Avg current CD4 count
+		Avg lowest CD4 count
+		Avg current viral load
+		Avg highest viral load
+
 *	Revision history - who changed it and what changed?
 	Initial solution - use Django Reversion
 	http://code.google.com/p/django-reversion
 
-*	Rework VisitForm to conform to the "Case Report Form" artifact that
-	was given out by Drexel staff.
-
 * 	Before allowing update/create, change views so they require a review&
 	confirm step
-
-*	Consider adding ON DELETE CASCADE to Patient and Visit tables.
 
 * 	Remove lowest & higest from patient, those should be calculated fields
 
@@ -44,24 +63,5 @@ OPEN ISSUES:
 *	Special case: If it is the first visit for a patient, create a "Past ART" and
 	"Past CD4 and DSG" to reflect data that is coming from historic sources.
 
-*	Patient demographics:
-		Gender
-		Race
-		Age
-		Years seropositive
-		Route of infection
-		HAART status - continuous (cH), discontinuous (dH), or naïve (nH)
-		Drug test results - positive, negative, undetermined (UD)
-		Number of drugs used - taken from column drugs use-admit or test 
-			positive.  To make this automated we will need to add
-			the checked boxes from the admitted drugs with the test
-			positive for with filtering out overlap.
-			Not sure how you want that done on your end.
-		Drugs used - break down of percent of patients that admit or
-			test positive for a given drug.
-		Alcohol abuse - past, current, never
-		Tobacco use - past, current, never
-		Avg current CD4 count
-		Avg lowest CD4 count
-		Avg current viral load
-		Avg highest viral load
+*	Break up application into smaller pieces.
+	http://www.slideshare.net/jacobian/django-in-the-real-world

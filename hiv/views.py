@@ -80,7 +80,7 @@ def patient_search(request):
 		return render_to_response('hiv/patient_result_list.html',
 						{'object_list':patients})
 	else:
-		form = PatientSearchForm()
+		form = PatientForm()
 		return render_to_response("hiv/patient_form.html", 
 							{"form":form})
 
@@ -107,7 +107,8 @@ def visit_create(request):
 			form_class=VisitForm
 		)
 	else:
-		visit_request(request)
+		form = VisitForm(request.POST)
+		form.save()
 		return render_to_response('hiv/base.html')
 
 
@@ -139,47 +140,9 @@ def visit_update(request,object_id):
 			object_id = object_id
 		)
 	else:
-		visit_request(request)
+		form = VisitForm(postdata=request.POST,visit_id=object_id)
+		form.save()
 		return render_to_response('hiv/base.html')
-
-@login_required
-def visit_request(request):
-	v = Visit()
-	v.patient = Patient.objects.get(pk=request.POST['patient'])
-	v.name = request.POST['name']
-	v.cd4 = request.POST['cd4']
-	v.dsg = request.POST['dsg']
-	v.viral = request.POST['viral']
-
-	# TODO: parse request.POST['date'] into DateTime object
-
-	# Insert into the database so we have a primary key
-	v.save()
-
-	# OK - now that we have a primary key we can insert the related
-	# data
-
-	for ill in request.POST.getlist('illnesses'):
-		i = PatientAdditionalIllnesses()
-		i.visit = v
-		i.illness = Illness.objects.get(pk=ill)
-		i.save()
-
-	for drug in request.POST.getlist("drugs"):
-		d = DrugUsed()
-		d.visit = v
-		d.drug = Drug.objects.get(pk=drug)
-		d.save()
-
-	for exp in request.POST.getlist("exposures"):
-		e = PatientExposedTo()
-		e.visit = v
-		e.exposure = Exposure.objects.get(pk=exp)
-		e.save()
-
-	# Create a page that says everything went better than expected!
-
-	return get_object_or_404(Visit,pk=v.pk)
 
 ###################### END: Visit Views #############################
 
