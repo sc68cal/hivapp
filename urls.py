@@ -21,14 +21,16 @@ urlpatterns = patterns('',
 	(r'^accounts/login/$', login),
 	(r'^accounts/logout/$',logout),
 	(r'^admin/', include(admin.site.urls)),
-	(r'^crf/', CaseReportFormWizard([
-					PatientSelectOrAddForm,
+	(r'^crf/', ExistingCaseReportForm([
+					PatientSelectForm,
 					AlcoholForm,
 					TobaccoForm,
 					ExposureForm,
 					HivForm,
 					]),
 				),
+	(r'^newcrf/',NewCaseReportForm([PatientForm,AlcoholForm,TobaccoForm,
+					   ExposureForm,HivForm])),
 	(r'^mutation/(?P<object_id>\d+)/$',mutation_detail),
 	(r'^patient/$',patient_list),
 	(r'^patient/(?P<object_id>\d+)/$',patient_detail),
@@ -49,7 +51,7 @@ if settings.DEBUG:
 		{'document_root':
 		'/Users/scollins/Programming/CoreITPro/BTech/helix/media/'}),
 	(r'^databrowse/(.*)', databrowse.site.root),
-)
+	)
 
 
 ## Databrowse

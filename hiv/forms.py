@@ -55,7 +55,8 @@ class ExposureForm(Form):
 						choices = [
 								[a.pk,a.name]
 								for a in Exposure.objects.all()
-							  ]
+							  ],
+						required=False
 					     )
 
 
@@ -89,35 +90,74 @@ class PatientForm(ModelForm):
 	gender = forms.CharField(widget=forms.Select(choices=gender_choices))
 	race = forms.CharField(widget=forms.Select(choices=race_choices))
 
-class PatientSelectOrAddForm(PatientForm):
-	patient = forms.CharField(widget=forms.Select(choices= [[a.id,a.patient_id] for a in Patient.objects.all()]))
-	def __init__(self,*args,**kwargs):
-		super(PatientForm,self).__init__(*args,**kwargs)
+class PatientSelectForm(Form):
+	patient = forms.IntegerField(widget=forms.Select(choices=[[a.id,a.patient_id] for a in Patient.objects.all()]))
 
 
-class CaseReportFormWizard(FormWizard):
+class ExistingCaseReportForm(FormWizard):
 	def done(self,request,form_list):
-		pass
+		pt = Patient.objects.get(pk=form_list[0].cleaned_data['patient'])
 
-	def alcohol_form(self):
-		pass
+		#TODO: Calculate the visit name. R-01, R-02 etc.
+		v = Visit(patient=pt,name=pt.patient_id)
+		v.save()
+		for step in range(0,len(form_list)):
+			form = form_list[step]
+			if step == 1 or step == 2:
+				#AlcoholForm + TobaccoForm
+				if form.cleaned_data['current_use'] != "No":
+					du = DrugUsed(
+						visit=v
+					)
+					if step == 1:
+						du.drug = Drug.objects.get(name="Alcohol")
+					else:
+						du.drug = Drug.objects.get(name="Tobacco")
+					du.save()
+			if step == 3:
+				#ExposureForm
+				for exposure_id in form.cleaned_data['exposures']:
+					exp = PatientExposedTo(
+								visit=v,
+								exposure=Exposure.objects.get(pk=exposure_id)
+								)
+					exp.save()
 
-	def drug_form(self):
-		pass
+class NewCaseReportForm(FormWizard):
+	def done(self,request,form_list):
+		v = Visit()
+		for step in range(0,len(form_list)):
+			form = form_list[step]
+			if step == 0:
+				#PatientForm
+				pt = Patient()
+				pt.gender = form.cleaned_data['gender']
+				pt.year_of_birth = form.cleaned_data['year_of_birth']
+				pt.race = form.cleaned_data['race']
+				pt.sero_positive_since = form.cleaned_data['sero_positive_since']
+				pt.save()
 
-	def hiv_form(self):
-		pass
-
-	def patient_form(self):
-		pass
-
-	def tobacco_form(self):
-		pass
-
-	def exposure_form(self):
-		pass
-
-
+				v.patient = pt
+				v.save()
+			if step == 1 or step == 2:
+				#AlcoholForm + TobaccoForm
+				if form.cleaned_data['current_use'] != "No":
+					du = DrugUsed(
+						visit=v
+					)
+					if step == 1:
+						du.drug = Drug.objects.get(name="Alcohol")
+					else:
+						du.drug = Drug.objects.get(name="Tobacco")
+					du.save()
+			if step == 3:
+				#ExposureForm
+				for exposure_id in form.cleaned_data['exposures']:
+					exp = PatientExposedTo(
+								visit=v,
+								exposure=exposure_id
+								)
+					exp.save()
 
 class VisitForm(ModelForm):
 	def __init__(self,postdata=None,visit_id=None,*args,**kwargs):

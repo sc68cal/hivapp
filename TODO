@@ -2,6 +2,11 @@ $Id$
 
 OPEN ISSUES:
 *	Replicate Case Report Form
+	* Difference between "No" and "Never" for drug usages 
+		currently the database doesn't differentiate between past and current
+	* Type of Alcohol and Tobacco use:
+		Does it matter, Cigarettes vs Pipes, etc..
+		Beer vs Liquor vs Wine?
 
 *	Patient demographics:
 		Gender
