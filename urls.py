@@ -29,7 +29,7 @@ urlpatterns = patterns('',
 					HivForm,
 					]),
 				),
-	(r'^newcrf/',NewCaseReportForm([PatientForm,AlcoholForm,TobaccoForm,
+	(r'^newcrf/',NewCaseReportForm([PatientFirstVisitForm,AlcoholForm,TobaccoForm,
 					   ExposureForm,HivForm])),
 	(r'^mutation/(?P<object_id>\d+)/$',mutation_detail),
 	(r'^patient/$',patient_list),
@@ -49,7 +49,7 @@ if settings.DEBUG:
 	urlpatterns += patterns('',
 	(r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
 		{'document_root':
-		'/Users/scollins/Programming/CoreITPro/BTech/helix/media/'}),
+		'/Users/scollins/Programming/CoreITPro/BTech/hivapp/helix/media/'}),
 	(r'^databrowse/(.*)', databrowse.site.root),
 	)
 

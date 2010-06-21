@@ -1,5 +1,4 @@
 $Id$
-
 OPEN ISSUES:
 *	Replicate Case Report Form
 	* Difference between "No" and "Never" for drug usages 
@@ -70,3 +69,5 @@ OPEN ISSUES:
 
 *	Break up application into smaller pieces.
 	http://www.slideshare.net/jacobian/django-in-the-real-world
+
+*	Put all hiv URLs inside helix/hiv/urls.py instead of the  helix/urls.py

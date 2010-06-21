@@ -55,7 +55,7 @@ USE_I18N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 if DEBUG:
-	MEDIA_ROOT = "/Users/scollins/Programming/CoreITPro/BTech/helix/"
+	MEDIA_ROOT = "/Users/scollins/Programming/CoreITPro/BTech/hivapp/helix/media"
 else:
 	MEDIA_ROOT = "/var/www/html/hivapp/helix/media"
 
@@ -120,7 +120,7 @@ if DEBUG:
     		# Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     		# Always use forward slashes, even on Windows.
     		# Don't forget to use absolute paths, not relative paths.
-    		'/Users/scollins/Programming/CoreITPro/BTech//helix/templates/',
+    		'/Users/scollins/Programming/CoreITPro/BTech/hivapp/helix/templates/',
 	)
 else:
 	TEMPLATE_DIRS = ('/var/www/html/hivapp/helix/templates/')

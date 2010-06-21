@@ -1,5 +1,6 @@
 # $Id$
 from django.forms import ModelForm, Form
+from django.http import HttpResponseRedirect
 from django import forms
 from helix.hiv.models import *
 from django.contrib.formtools.wizard import FormWizard
@@ -90,8 +91,15 @@ class PatientForm(ModelForm):
 	gender = forms.CharField(widget=forms.Select(choices=gender_choices))
 	race = forms.CharField(widget=forms.Select(choices=race_choices))
 
+
+class PatientFirstVisitForm(PatientForm):
+	cd4 = forms.IntegerField()
+	viral = forms.IntegerField()
+
 class PatientSelectForm(Form):
 	patient = forms.IntegerField(widget=forms.Select(choices=[[a.id,a.patient_id] for a in Patient.objects.all()]))
+	cd4 = forms.IntegerField()
+	viral = forms.IntegerField()
 
 
 class ExistingCaseReportForm(FormWizard):
@@ -99,7 +107,10 @@ class ExistingCaseReportForm(FormWizard):
 		pt = Patient.objects.get(pk=form_list[0].cleaned_data['patient'])
 
 		#TODO: Calculate the visit name. R-01, R-02 etc.
-		v = Visit(patient=pt,name=pt.patient_id)
+		v = Visit(patient=pt)
+		v.name = pt.patient_id + "-R" + str(len(pt.visit_set.get_query_set()))
+		v.cd4 = form_list[0].cleaned_data['cd4']
+		v.viral = form_list[0].cleaned_data['viral']
 		v.save()
 		for step in range(0,len(form_list)):
 			form = form_list[step]
@@ -122,6 +133,8 @@ class ExistingCaseReportForm(FormWizard):
 								exposure=Exposure.objects.get(pk=exposure_id)
 								)
 					exp.save()
+		return  HttpResponseRedirect('/')
+
 
 class NewCaseReportForm(FormWizard):
 	def done(self,request,form_list):
@@ -131,6 +144,7 @@ class NewCaseReportForm(FormWizard):
 			if step == 0:
 				#PatientForm
 				pt = Patient()
+				pt.patient_id = form.cleaned_data['patient_id']
 				pt.gender = form.cleaned_data['gender']
 				pt.year_of_birth = form.cleaned_data['year_of_birth']
 				pt.race = form.cleaned_data['race']
@@ -138,6 +152,9 @@ class NewCaseReportForm(FormWizard):
 				pt.save()
 
 				v.patient = pt
+				v.name = pt.patient_id
+				v.cd4 = form_list[0].cleaned_data['cd4']
+				v.viral = form_list[0].cleaned_data['viral']
 				v.save()
 			if step == 1 or step == 2:
 				#AlcoholForm + TobaccoForm
@@ -155,9 +172,10 @@ class NewCaseReportForm(FormWizard):
 				for exposure_id in form.cleaned_data['exposures']:
 					exp = PatientExposedTo(
 								visit=v,
-								exposure=exposure_id
+								exposure=Exposure.objects.get(pk=exposure_id)
 								)
 					exp.save()
+		return  HttpResponseRedirect('/')
 
 class VisitForm(ModelForm):
 	def __init__(self,postdata=None,visit_id=None,*args,**kwargs):
