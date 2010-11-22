@@ -6,9 +6,10 @@ from django.views.generic import list_detail,create_update
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
-
-import json
-
+try:
+	import json
+except ImportError:
+	import simplejson as json
 
 def index(request):
 	return render_to_response('hiv/base.html')
