@@ -34,6 +34,7 @@ urlpatterns = patterns('',
 	(r'^visit/add/$',visit_create),
 	(r'^visit/edit/(?P<object_id>\d+)/$',visit_update),
 	(r'^api/json/patient/$',ajax_patient_list),
+	(r'^api/json/visit/$',ajax_visit_list),
 	(r'^$', index)
 )
 

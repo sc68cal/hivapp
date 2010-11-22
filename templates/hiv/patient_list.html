@@ -1,44 +1,42 @@
 {% extends "hiv/base.html" %}
 {% block head %}
-{% comment %}
 <!--  
 This is an attempt to use the dataTables jquery 
 plugin to have pretty tables for
 the patient list
  -->
-<script type="text/javascript" src="/site_media/js/jquery.dataTables.min.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function(){
-	$('#list').dataTable( {
-		'bProcessing': true,
-		'bRetrieve': true,
-		'bServerSide':true,
-		'sAjaxSource': "/api/json/patient"
-	});
-});
-</script>
-{% endcomment %}
+<script type="text/javascript" src="/site_media/js/flexigrid.js"></script>
+<link rel="stylesheet" href="/site_media/css/flexigrid.css" type='text/css' />
 {% endblock %}
 
 
 {% block content %}
-<div id="list" style="margin: auto; width:500px; padding-top:50px;">
-	{% for patient in object_list %}
-		{% if forloop.counter0|divisibleby:"12" %}
-			<div class="object">
-		{% endif %}
-				<a href="{{patient.id}}">{{ patient.patient_id }}</a>
-		{% if forloop.counter|divisibleby:"12" %}
-			</div>
-		{% endif %}
-	{% endfor %}
-	</div>
-</div>
-{% comment %}
-<table id="list" cellspacing='0' cellpadding='0' border='0'>
+<table id="list" ></table>
+<script type="text/javascript">
+$('#list').flexigrid({
+			url: '{%url hiv.views.ajax_patient_list %}',
+			dataType: 'json',
+			colModel : [
+				{display: 'Name', name : 'patient_id', width : 180, sortable : true, align: 'left'},
+				],
+			buttons : [
+				],
+			searchitems : [
+				{display: 'ISO', name : 'iso'},
+				{display: 'Name', name : 'name', isdefault: true}
+				],
+			sortname: "patient_id",
+			sortorder: "asc",
+			usepager: true,
+			singleSelect: true,
+			title: 'Patients',
+			useRp: true,
+			rp: 15,
+			showTableToggleBtn: true,
+			width: 700,
+			height: 200
 
-</table>
-{% endcomment %}
+});
 
+</script>
 {% endblock %}

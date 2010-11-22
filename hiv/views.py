@@ -5,6 +5,8 @@ from hiv.forms import *
 from django.views.generic import list_detail,create_update
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse
+
 import json
 
 
@@ -46,7 +48,12 @@ def mutation_update(request,object_id):
 @login_required
 def ajax_patient_list(request):
 	json_data = {}
-	json_data['aaData'] = [[patient.patient_id] for patient in Patient.objects.all()]
+	json_data['total'] = Patient.objects.count()
+	json_data['page'] = 1;
+	json_data['rows'] = []
+	for patient in Patient.objects.all():
+		row = {'id':patient.id,'cell':["<a href=" + reverse(patient_detail,args=[patient.id])+">"+patient.patient_id+"</a>"]}
+		json_data['rows'].append(row)
 	return HttpResponse(json.dumps(json_data)) 
 		
 
@@ -113,7 +120,17 @@ def patient_update(request,object_id):
 
 
 ###################### BEGIN: Visit Views #############################
-
+@login_required
+def ajax_visit_list(request):
+	json_data = {}
+	json_data['total'] = Visit.objects.count()
+	json_data['page'] = 1;
+	json_data['rows'] = []
+	for visit in Visit.objects.all():
+		row = {'id':visit.id,'cell':["<a href=" + reverse(visit_detail,args=[visit.id])+">"+visit.name+"</a>"]}
+		json_data['rows'].append(row)
+	return HttpResponse(json.dumps(json_data)) 
+		
 @login_required
 def visit_create(request):
 	if not request.POST:
