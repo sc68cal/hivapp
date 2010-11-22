@@ -66,12 +66,14 @@ class PatientForm(ModelForm):
 	class Meta:
 		model = Patient
 	gender_choices = (
+				("",""),
 				("M","M"),
 				("F","F"),
-				("Transgender M->F","Transgender M->F"),
-				("Transgender F->M","Transgender F->M"),
+				("TG M->F","Transgender M->F"),
+				("TG F->M","Transgender F->M"),
 			)
 	race_choices = (
+				("",""),
 				("Hispanic or Latino","Hispanic or Latino"),
 				("Not Hispanic or Latino",
 					"Not Hispanic or Latino"),

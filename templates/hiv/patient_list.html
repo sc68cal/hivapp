@@ -1,4 +1,26 @@
 {% extends "hiv/base.html" %}
+{% block head %}
+{% comment %}
+<!--  
+This is an attempt to use the dataTables jquery 
+plugin to have pretty tables for
+the patient list
+ -->
+<script type="text/javascript" src="/site_media/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#list').dataTable( {
+		'bProcessing': true,
+		'bRetrieve': true,
+		'bServerSide':true,
+		'sAjaxSource': "/api/json/patient"
+	});
+});
+</script>
+{% endcomment %}
+{% endblock %}
+
 
 {% block content %}
 <div id="list" style="margin: auto; width:500px; padding-top:50px;">
@@ -13,4 +35,10 @@
 	{% endfor %}
 	</div>
 </div>
+{% comment %}
+<table id="list" cellspacing='0' cellpadding='0' border='0'>
+
+</table>
+{% endcomment %}
+
 {% endblock %}

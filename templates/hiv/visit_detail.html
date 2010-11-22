@@ -3,7 +3,7 @@
 {% block content %}
 <div id="data">
 	<h1>Visit</h1>
-	<h3><a href="{% url helix.hiv.views.visit_update object.id %}">Edit</a></h3>
+	<h3><a href="{% url hiv.views.visit_update object.id %}">Edit</a></h3>
 	Visit ID: {{ object.name }}<br />
 	Date of Visit: {{object.date|default_if_none:"Not Available"}} <br />
 	CD4: {{ object.cd4|default_if_none:"Not Available" }}<br />
@@ -52,7 +52,7 @@
 		{% if forloop.first %}
 		<h2> Mutations: </h2>
 		{% endif %}
-			<a href="{% url helix.hiv.views.mutation_detail mut.id %}">
+			<a href="{% url hiv.views.mutation_detail mut.id %}">
 				{{ mut }}
 			</a><br />
 	{% endfor %}

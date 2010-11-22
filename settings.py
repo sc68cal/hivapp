@@ -1,9 +1,6 @@
 # $Id$
-# Django settings for helix project.
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
-CACHE_BACKEND = 'db://django_cache'
 
 if not DEBUG:
 	LOGIN_URL = '/hivapp/accounts/login'
@@ -11,15 +8,10 @@ if not DEBUG:
 	LOGIN_REDIRECT_URL = '/hivapp/accounts/profile'
 	SESSION_COOKIE_SECURE = True
 
-# Use to prevent caching of pages that require authentication
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
-
 ADMINS = (
     ('Sean M. Collins', 'sean@coreitpro.com'),
 )
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
 if DEBUG:
 	MANAGERS = ADMINS
 	DATABASE_ENGINE = 'mysql'
@@ -133,6 +125,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    'helix.hiv',
+    'hiv',
     'reversion',
 )

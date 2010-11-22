@@ -6,10 +6,7 @@
 <link rel="stylesheet" href="/site_media/css/default.css" media="screen and (min-device-width: 481px)" type="text/css" />
 <link type="text/css" rel="stylesheet" media="only screen and (max-device-width: 480px)" href="/site_media/css/handheld.css" />
 <link rel="stylesheet" href="/site_media/css/handheld.css" media="handheld" type="text/css" />
-<link type="text/css" rel="stylesheet" href="/site_media/js/autocomplete.css" />
-<script type="text/javascript" src="/site_media/js/jquery-1.2.1.js"></script>
-<script type="text/javascript" src="/site_media/js/dimensions.js"></script>
-<script type="text/javascript" src="/site_media/js/autocomplete.js"></script>
+<script type="text/javascript" src="/site_media/js/jquery.js"></script>
 <style type="text/css">
 <!--
 .style1 {font-size: medium}
@@ -29,9 +26,9 @@
 <!-- end header -->
 <div id="menu">
   <ul>
-	<li><a href="{% url helix.hiv.views.patient_search %}">Patient Search</a></li>
-	<li><a href="{% url helix.hiv.views.patient_list %}">Patients</a></li>
-	<li><a href="{% url helix.hiv.views.visit_list %}">Patient Visit</a></li>
+	<li><a href="{% url hiv.views.patient_search %}">Patient Search</a></li>
+	<li><a href="{% url hiv.views.patient_list %}">Patients</a></li>
+	<li><a href="{% url hiv.views.visit_list %}">Patient Visit</a></li>
 	<li><a href="{% url django.contrib.auth.views.login %}">User Log In</a></li>
 	<li><a href="{% url django.contrib.auth.views.logout %}">User Log Out</a></li>
   </ul>

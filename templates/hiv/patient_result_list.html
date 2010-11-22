@@ -7,7 +7,7 @@
 
 	{% for patient in object_list %}
 		<div class="object">
-			<a href="/patient/{{patient.id}}">{{ patient.patient_id }}</a>
+			<a href="{% url hiv.views.patient_detail patient.id %}">{{ patient.patient_id }}</a>
 		</div>
 	{% endfor %}
 	</div>

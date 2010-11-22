@@ -1,9 +1,11 @@
 # $Id$
 from django.shortcuts import render_to_response,get_object_or_404
-from helix.hiv.models import *
-from helix.hiv.forms import *
+from hiv.models import *
+from hiv.forms import *
 from django.views.generic import list_detail,create_update
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+import json
 
 
 def index(request):
@@ -41,6 +43,12 @@ def mutation_update(request,object_id):
 
 ################### BEGIN: Patient Views #############################
 
+@login_required
+def ajax_patient_list(request):
+	json_data = {}
+	json_data['aaData'] = [[patient.patient_id] for patient in Patient.objects.all()]
+	return HttpResponse(json.dumps(json_data)) 
+		
 
 @login_required
 def patient_create(request):
@@ -69,16 +77,23 @@ def patient_list(request):
 @login_required
 def patient_search(request):
 	# Search by patient name
-	if 'patient_id' in request.POST and request.POST['patient_id']:
-		search = request.POST['patient_id']
+	if request.POST:
 		results = Patient.objects.all()
-		# First see if we have an exact match
-		patients = results.filter(patient_id__iexact=search)
-		if not patients:
-			# Expand the search to see any patients
-			patients = results.filter(patient_id__icontains=search)
+		if 'patient_id' in request.POST and request.POST['patient_id']:
+			search = request.POST['patient_id']
+			# First see if we have an exact match
+			results = results.filter(patient_id__iexact=search)
+			if not results:
+				# Expand the search to see any patients
+				patients = results.filter(patient_id__icontains=search)
+		if 'gender' in request.POST and request.POST['gender']:
+			results = results.filter(gender=request.POST['gender'])
+		if 'year_of_birth' in request.POST and request.POST['year_of_birth']:
+			results = results.filter(year_of_birth=request.POST['year_of_birth'])
+		if 'sero_positive_since' in request.POST and request.POST['sero_positive_since']:
+			results = results.filter(sero_positive_since=request.POST['sero_positive_since'])
 		return render_to_response('hiv/patient_result_list.html',
-						{'object_list':patients})
+						{'object_list':results})
 	else:
 		form = PatientForm()
 		return render_to_response("hiv/patient_form.html", 
