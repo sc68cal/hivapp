@@ -50,9 +50,15 @@ def mutation_update(request,object_id):
 def ajax_patient_list(request):
 	json_data = {}
 	json_data['total'] = Patient.objects.count()
-	json_data['page'] = 1;
+	json_data['page'] = request.POST['page'];
+	count = int(request.POST['rp'])
+	if request.POST['page'] == 1:
+		start = 0
+	else:
+		start = (int(request.POST['page'])-1) * int(request.POST['rp'])
 	json_data['rows'] = []
-	for patient in Patient.objects.all():
+	end = start + count
+	for patient in Patient.objects.all()[start:end]:
 		row = {'id':patient.id,'cell':["<a href=" + reverse(patient_detail,args=[patient.id])+">"+patient.patient_id+"</a>"]}
 		json_data['rows'].append(row)
 	return HttpResponse(json.dumps(json_data)) 
@@ -125,13 +131,20 @@ def patient_update(request,object_id):
 def ajax_visit_list(request):
 	json_data = {}
 	json_data['total'] = Visit.objects.count()
-	json_data['page'] = 1;
+	json_data['page'] = request.POST['page'];
 	json_data['rows'] = []
-	for visit in Visit.objects.all():
+	count = int(request.POST['rp'])
+	if request.POST['page'] == 1:
+		start = 0
+	else:
+		start = (int(request.POST['page'])-1) * int(request.POST['rp'])
+	json_data['rows'] = []
+	end = start + count
+	for visit in Visit.objects.all()[start:end]:
 		row = {'id':visit.id,'cell':["<a href=" + reverse(visit_detail,args=[visit.id])+">"+visit.name+"</a>"]}
 		json_data['rows'].append(row)
 	return HttpResponse(json.dumps(json_data)) 
-		
+
 @login_required
 def visit_create(request):
 	if not request.POST:

@@ -5,7 +5,7 @@ TEMPLATE_DEBUG = DEBUG
 if not DEBUG:
 	LOGIN_URL = '/hivapp/accounts/login'
 	LOGOUT_URL = '/hivapp/accounts/logout'
-	LOGIN_REDIRECT_URL = '/hivapp/accounts/profile'
+	LOGIN_REDIRECT_URL = '/hivapp/'
 	SESSION_COOKIE_SECURE = True
 
 ADMINS = (
@@ -49,17 +49,14 @@ USE_I18N = True
 if DEBUG:
 	MEDIA_ROOT = "/Users/scollins/Programming/CoreITPro/BTech/hivapp/helix/media"
 else:
-	MEDIA_ROOT = "/var/www/html/hivapp/helix/media"
+	MEDIA_ROOT = "/var/www/html/media"
 
 
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-if DEBUG:
-	MEDIA_URL = '/site_media/'
-else:
-	MEDIA_URL = '/static/'
+MEDIA_URL = '/site_media/'
 
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
