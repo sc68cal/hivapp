@@ -49,18 +49,37 @@ def mutation_update(request,object_id):
 @login_required
 def ajax_patient_list(request):
 	json_data = {}
-	json_data['total'] = Patient.objects.count()
 	json_data['page'] = request.POST['page'];
+	json_data['rows'] = []
+
 	count = int(request.POST['rp'])
+	if request.POST['sortname'] == 'patient_id':
+		if request.POST['sortorder'] == 'asc':
+			results = Patient.objects.order_by('patient_id')
+		else:
+			results = Patient.objects.order_by('-patient_id')
 	if request.POST['page'] == 1:
 		start = 0
 	else:
 		start = (int(request.POST['page'])-1) * int(request.POST['rp'])
-	json_data['rows'] = []
 	end = start + count
-	for patient in Patient.objects.all()[start:end]:
-		row = {'id':patient.id,'cell':["<a href=" + reverse(patient_detail,args=[patient.id])+">"+patient.patient_id+"</a>"]}
+	if request.POST['qtype'] == 'name':
+		results = results.filter(patient_id__contains=request.POST['query'])
+	elif request.POST['qtype'] =='dob':
+		results = results.filter(year_of_birth=request.POST['query'])
+	elif request.POST['qtype'] == 'gender':
+		results = results.filter(gender=request.POST['query'])
+	elif request.POST['qtype'] == 'sero':
+		results = results.filter(sero_positive_since=request.POST['query'])
+	for patient in results[start:end]:
+		row = {'id':patient.id,'cell':[]}
+		# number of visits
+		row['cell'].append("<a href=" + reverse(patient_detail,args=[patient.id])+">"+patient.patient_id+"</a>")
+		row['cell'].append(patient.gender)
+		row['cell'].append(patient.year_of_birth)
+		row['cell'].append(patient.visit_set.count())
 		json_data['rows'].append(row)
+	json_data['total'] = results.count()
 	return HttpResponse(json.dumps(json_data)) 
 		
 

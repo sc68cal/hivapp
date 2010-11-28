@@ -68,7 +68,7 @@ class Patient(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-    		return ('helix.hiv.views.patient_detail', [str(self.id)])
+    		return ('hiv.views.patient_detail', [str(self.id)])
 
 class Visit(models.Model):
 	"""
