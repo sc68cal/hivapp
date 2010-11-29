@@ -18,12 +18,16 @@ $('#list').flexigrid({
 			dataType: 'json',
 			colModel : [
 				{display: 'Name', name : 'name', width : 180, sortable : true, align: 'left'},
+				{display: "Date of Visit", name: "date", width: 180, sortable: true, align: 'left'},
+				{display: "CD4", name: 'cd4', width: 50, sortable: true, align: 'left'},
+				{display: "Viral", name:'viral', width: 50, sortable:true, align:'left'},
+				{display: "DSG", name: 'dsg', width: 50, sortable:true, align: 'left'},
 				],
 			buttons : [
 				],
 			searchitems : [
-				{display: 'ISO', name : 'iso'},
-				{display: 'Name', name : 'name', isdefault: true}
+				{display: 'Name', name : 'name', isdefault: true},
+				
 				],
 			sortname: "name",
 			sortorder: "asc",

@@ -149,7 +149,6 @@ def patient_update(request,object_id):
 @login_required
 def ajax_visit_list(request):
 	json_data = {}
-	json_data['total'] = Visit.objects.count()
 	json_data['page'] = request.POST['page'];
 	json_data['rows'] = []
 	count = int(request.POST['rp'])
@@ -159,9 +158,40 @@ def ajax_visit_list(request):
 		start = (int(request.POST['page'])-1) * int(request.POST['rp'])
 	json_data['rows'] = []
 	end = start + count
-	for visit in Visit.objects.all()[start:end]:
-		row = {'id':visit.id,'cell':["<a href=" + reverse(visit_detail,args=[visit.id])+">"+visit.name+"</a>"]}
+	if request.POST['sortname'] == 'name':
+		if request.POST['sortorder'] == 'asc':
+			results = Visit.objects.order_by('name')
+		else:
+			results = Patient.objects.order_by('-name')
+	elif request.POST['sortname'] == 'date':
+		if request.POST['sortorder'] == "asc":
+			results = Visit.objects.order_by('date')
+		else:
+			results = Visit.objects.order_by('-date')
+	elif request.POST['sortname'] == 'cd4':
+		if request.POST['sortorder'] == "asc":
+			results = Visit.objects.order_by('cd4')
+		else:
+			results = Visit.objects.order_by('-cd4')
+	elif request.POST['sortname'] == 'viral':
+		if request.POST['sortorder'] == 'asc':
+			results = Visit.objects.order_by('viral')
+		else:
+			results = Visit.objects.order_by('-viral')
+	elif request.POST['sortname'] == 'dsg':
+		if request.POST['sortorder'] == 'asc':
+			results = Visit.objects.order_by('dsg')
+		else:
+			results = Visit.objects.order_by('-dsg')
+	for visit in results[start:end]:
+		row = {'id':visit.id,'cell':[]}
+		row['cell'].append("<a href=" + reverse(visit_detail,args=[visit.id])+">"+visit.name+"</a>")
+		row['cell'].append(visit.date)
+		row['cell'].append(visit.cd4)
+		row['cell'].append(visit.viral)
+		row['cell'].append(visit.dsg)
 		json_data['rows'].append(row)
+	json_data['total'] = results.count()
 	return HttpResponse(json.dumps(json_data)) 
 
 @login_required
