@@ -102,10 +102,7 @@ def patient_detail(request,object_id):
 
 @login_required
 def patient_list(request):
-	return list_detail.object_list(
-		request,
-		queryset=Patient.objects.all()
-	)
+	return render_to_response('hiv/patient_list.html')
 
 @login_required
 def patient_search(request):
@@ -220,10 +217,8 @@ def visit_detail(request,object_id):
 
 @login_required
 def visit_list(request):
-	return list_detail.object_list(
-		request,
-		queryset=Visit.objects.all()
-	)
+	return render_to_response('hiv/visit_list.html')
+
 
 
 @login_required
