@@ -2,11 +2,17 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+
 if not DEBUG:
 	LOGIN_URL = '/hivapp/accounts/login'
 	LOGOUT_URL = '/hivapp/accounts/logout'
-	LOGIN_REDIRECT_URL = '/hivapp/'
 	SESSION_COOKIE_SECURE = True
+	LOGIN_REDIRECT_URL = '/hivapp/'
+else:
+	LOGIN_URL = '/accounts/login'
+	LOGOUT_URL = "/accounts/logout"
+	LOGIN_REDIRECT_URL = "/"
+
 
 ADMINS = (
     ('Sean M. Collins', 'sean@coreitpro.com'),

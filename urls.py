@@ -1,9 +1,8 @@
 # $Id$
 from django.conf.urls.defaults import *
-from django.contrib.auth.views import login,logout
 from django.contrib import databrowse
 from hiv.models import Patient,Visit
-import settings
+from helix import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -17,8 +16,9 @@ urlpatterns = patterns('',
 	# to INSTALLED_APPS to enable admin documentation:
 	# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	(r'',include('hiv.urls')),
-	(r'^accounts/login/$', login),
-	(r'^accounts/logout/$',logout),
+	(r'^accounts/login/$', "django.contrib.auth.views.login"),
+	(r'^accounts/logout/$','django.contrib.auth.views.logout',{'next_page':settings.LOGIN_URL}),
+	(r'^accounts/password','django.contrib.auth.views.password_change',{'post_change_redirect':settings.LOGIN_REDIRECT_URL}),
 	(r'^admin/', include(admin.site.urls)),
 
 )
