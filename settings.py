@@ -98,12 +98,10 @@ it walks down the list to the view, and on the response it walks back up.
 
 '''
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
-        'django.middleware.transaction.TransactionMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
     'reversion.middleware.RevisionMiddleware',
     
 )

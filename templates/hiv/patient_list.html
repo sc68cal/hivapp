@@ -12,6 +12,10 @@ the patient list
 
 {% block content %}
 <table id="list" ></table>
+<div>
+<h2><a href="{% url hiv.views.patient_create %}">Add new Patient</a></h2>
+</div>
+
 <script type="text/javascript">
 $('#list').flexigrid({
 			url: '{%url hiv.views.ajax_patient_list %}',

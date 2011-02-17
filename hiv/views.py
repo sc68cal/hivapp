@@ -232,7 +232,7 @@ def visit_update(request,object_id):
 	else:
 		form = VisitForm(postdata=request.POST,visit_id=object_id)
 		form.save()
-		return render_to_response('hiv/base.html')
+		return visit_detail(request,object_id)
 
 ###################### END: Visit Views #############################
 
