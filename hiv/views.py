@@ -183,7 +183,10 @@ def ajax_visit_list(request):
 	for visit in results[start:end]:
 		row = {'id':visit.id,'cell':[]}
 		row['cell'].append("<a href=" + reverse(visit_detail,args=[visit.id])+">"+visit.name+"</a>")
-		row['cell'].append(visit.date)
+		if visit.date:
+			row['cell'].append(visit.date.strftime("%m/%d/%Y"))
+		else:
+			row["cell"].append("Not Available")
 		row['cell'].append(visit.cd4)
 		row['cell'].append(visit.viral)
 		row['cell'].append(visit.dsg)
@@ -220,7 +223,8 @@ def visit_list(request):
 	return render_to_response('hiv/visit_list.html')
 
 
-
+# TODO: http://stackoverflow.com/questions/387686/what-are-the-steps-to-make-a-modelform-work-with-a-manytomany-relationship-with-a
+# TODO: http://docs.djangoproject.com/en/dev/topics/forms/modelforms/#inline-formsets
 @login_required
 def visit_update(request,object_id):
 	if not request.POST:

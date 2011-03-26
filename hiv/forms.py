@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django import forms
 from helix.hiv.models import *
 from django.contrib.formtools.wizard import FormWizard
+from datetime import datetime
 
 class AlcoholForm(Form):
 	current_use = forms.CharField(widget=forms.Select(choices=
@@ -195,9 +196,16 @@ class VisitForm(ModelForm):
 			v.id = self.visit_id
 		v.patient = Patient.objects.get(pk=self.postdata['patient'])
 		v.name = self.postdata['name']
-		v.cd4 = self.postdata['cd4']
-		v.dsg = self.postdata['dsg']
-		v.viral = self.postdata['viral']
+		if self.postdata["cd4"]:
+			v.cd4 = self.postdata['cd4']
+		if self.postdata["dsg"]:
+			v.dsg = self.postdata['dsg']
+		if self.postdata["viral"]:
+			v.viral = self.postdata['viral']
+		if self.postdata["date"]:
+			v.date = datetime.strptime(self.postdata['date'],'%m/%d/%Y')
+		else:
+			v.date = None
 
 		# TODO: parse postdata['date'] into DateTime object
 
@@ -206,6 +214,9 @@ class VisitForm(ModelForm):
 
 		# OK - now that we have a primary key we can insert the related
 		# data
+		v.drugs.clear()
+		v.exposures.clear()
+		v.illnesses.clear()
 
 		for ill in self.postdata.getlist('illnesses'):
 			i = PatientAdditionalIllnesses()
