@@ -1,9 +1,21 @@
 {% extends "hiv/base.html" %}
+{% block head %}
+<link type="text/css" href="/site_media/css/smoothness/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />
+<script type="text/javascript" src="/site_media/js/jquery-ui-1.8.9.min.js"></script>
+{% endblock %}
 	{% block content %}
 	<div id="data">
 		<form action="" method="post">
 		{{ form.as_ul }} 
 		<input type="submit" value="Submit" />
+		</form>
 	</div>
-{% endblock %}
-</form>
+
+<script type="text/javascript">
+$(function(){
+	$("#id_lowest_cd4_date").datepicker();
+	$("#id_highest_viral_date").datepicker();
+});
+
+</script>
+	{% endblock %}

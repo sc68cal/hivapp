@@ -59,8 +59,8 @@ class Patient(models.Model):
 	sero_positive_since = models.IntegerField()
 	lowest_cd4 = models.IntegerField(null=True, blank=True)
 	highest_viral = models.IntegerField(null=True, blank=True)
-	lowest_cd4_date = models.IntegerField(null=True, blank=True)
-	highest_viral_date = models.IntegerField(null=True, blank=True)
+	lowest_cd4_date = models.DateField(null=True, blank=True)
+	highest_viral_date = models.DateField(null=True, blank=True)
 	race = models.CharField(max_length=135, blank=True)
 
 	def __unicode__(self):
